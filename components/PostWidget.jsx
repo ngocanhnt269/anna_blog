@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import moment from "moment";
 import Link from "next/link";
-import { getRecentPosts } from "../services";
-import { getSimilarPosts } from "../services";
+
+import { grpahCMSImageLoader } from "../util";
+import { getSimilarPosts, getRecentPosts } from "../services";
 
 const PostWidget = ({ categories, slug }) => {
   const [relatedPosts, setRelatedPosts] = useState([]);
-  // Slug is a path
+
   useEffect(() => {
     if (slug) {
-      //
       getSimilarPosts(categories, slug).then((result) => {
         setRelatedPosts(result);
       });
@@ -19,7 +20,6 @@ const PostWidget = ({ categories, slug }) => {
       });
     }
   }, [slug]);
-  console.log(relatedPosts);
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
@@ -29,8 +29,8 @@ const PostWidget = ({ categories, slug }) => {
       {relatedPosts.map((post, index) => (
         <div key={index} className="flex items-center w-full mb-4">
           <div className="w-16 flex-none">
-            <img
-              // loader={grpahCMSImageLoader}
+            <Image
+              loader={grpahCMSImageLoader}
               alt={post.title}
               height="60px"
               width="60px"
